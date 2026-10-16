@@ -1,0 +1,11 @@
+SELECT stop_id, count(*) FROM transport.dim_transit_stop GROUP BY stop_id HAVING count(*) > 1;
+SELECT stop_name, count(DISTINCT stop_id) FROM transport.dim_transit_stop GROUP BY stop_name HAVING count(DISTINCT stop_id) > 1;
+SELECT stop_id, service_date, hour, count(*) FROM transport.fact_stop_ridership GROUP BY 1,2,3 HAVING count(*) > 1;
+SELECT hour, count(*) FILTER (WHERE ridership IS NULL) AS null_count FROM transport.fact_stop_ridership GROUP BY hour ORDER BY hour;
+SELECT quality_status, COUNT(*) FROM transport.curated_stop_profile GROUP BY quality_status ORDER BY quality_status;
+SELECT COUNT(*) FROM transport.transit_context_by_dong;
+SELECT SUM(master_stop_count) FROM transport.transit_context_by_dong;
+SELECT SUM(observed_stop_count) FROM transport.transit_context_by_dong;
+SELECT SUM(analysis_ready_stop_count) FROM transport.transit_context_by_dong;
+SELECT ST_SRID(geometry) AS srid, COUNT(*) FROM transport.transit_context_by_dong GROUP BY ST_SRID(geometry);
+SELECT COUNT(*) AS invalid_geometry FROM transport.transit_context_by_dong WHERE NOT ST_IsValid(geometry);

@@ -1,0 +1,24 @@
+dataset: changwon_drt_stop_network_accessibility
+status: experimental_feature_foundation
+source: OpenStreetMap contributors via OSMnx and Overpass
+source_url: https://www.openstreetmap.org/copyright
+network_type: walk
+network_download_date: 2026-08-30
+network_extent: official Changwon administrative boundary union plus 2000 metre buffer
+buffer_m: 2000
+network_crs: EPSG:5179
+release_crs: EPSG:4326
+walking_distance_method: shortest path on undirected OSM walk network plus source and target snap connector distances
+walking_speed_assumption: 4.8 km/h or 80 m/min for explanatory 5 and 10 minute proxies only; no observed travel time
+snap_method: nearest OSM network node in EPSG:5179
+snap_qa_thresholds:
+  ok_max_m: 100
+  far_max_m: 200
+  very_far_min_m: 200
+straight_vs_network: Euclidean EPSG:5179 features remain separate and are never relabeled as walking distance
+limitations:
+  - OSM completeness and pedestrian tagging vary by place and download date.
+  - Snap connectors do not assert a mapped pedestrian path between the stop and node.
+  - External roads are included by the buffer, but outside-city bus stops are not included in primary catchments.
+  - Distances are pedestrian accessibility proxies, not vehicle travel time or DRT route distance.
+  - No service zone, optimal route, or final anchor determination is represented.

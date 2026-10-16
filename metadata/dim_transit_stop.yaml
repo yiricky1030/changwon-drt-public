@@ -1,0 +1,20 @@
+title: 창원시 공식 대중교통 정류소
+summary: 공식 정류소 ID와 EPSG:4326 위치를 제공하는 기준 차원 데이터셋
+description: 2024-12-31 기준 창원시 버스정류소 위치정보를 원본 행 삭제 없이 정규화한 데이터셋이다.
+source: 경상남도 창원시 버스정류소 위치정보
+source_url: null
+spatial_coverage: 경상남도 창원시
+temporal_coverage: "2024-12-31 기준"
+geometry_type: Point
+crs: EPSG:4326
+update_frequency: 원천자료 갱신 시
+generated_at: pipeline-generated
+processing_method: 보수적 이름 정규화, 좌표 범위 검증, Point geometry 생성
+limitations:
+  - 공식 정류소 Master 기준일은 2024-12-31이며 ridership 기준일과 시점 차이가 존재한다.
+  - 중복 이름과 중복 좌표는 삭제하지 않고 QA 항목으로 유지한다.
+fields:
+  - {name: stop_id, type: string, description: 공식 정류소ID, nullable: false}
+  - {name: stop_name, type: string, description: 정규화된 정류소명, nullable: false}
+  - {name: geometry, type: geometry, description: EPSG:4326 정류소 위치, nullable: true}
+  - {name: master_dong_value, type: string, description: Source-provided administrative locality value. Despite the original column name 동코드, values are locality names rather than official administrative codes. This field is not used as an authoritative spatial join key., nullable: true}

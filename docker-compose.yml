@@ -1,0 +1,33 @@
+name: changwon-drt-public
+services:
+  analysis:
+    build: .
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    env_file: .env
+    environment:
+      PYTHONPATH: /workspace
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTEST_ADDOPTS: '-p no:cacheprovider'
+      POSTGRES_HOST: postgis
+    stdin_open: true
+    tty: true
+    command: ['bash']
+    depends_on:
+      postgis:
+        condition: service_healthy
+  postgis:
+    image: postgis/postgis:17-3.6-alpine
+    env_file: .env
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a local POSTGRES_PASSWORD in .env}
+    volumes:
+      - public_postgis_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+volumes:
+  public_postgis_data:

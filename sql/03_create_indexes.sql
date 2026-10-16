@@ -1,0 +1,18 @@
+CREATE INDEX IF NOT EXISTS idx_dim_transit_stop_geometry ON transport.dim_transit_stop USING gist (geometry);
+CREATE INDEX IF NOT EXISTS idx_dim_transit_stop_name ON transport.dim_transit_stop (stop_name);
+CREATE INDEX IF NOT EXISTS idx_fact_stop_ridership_stop_date ON transport.fact_stop_ridership (stop_id, service_date);
+CREATE INDEX IF NOT EXISTS idx_fact_stop_ridership_stop_id ON transport.fact_stop_ridership (stop_id);
+CREATE INDEX IF NOT EXISTS idx_fact_stop_ridership_service_date ON transport.fact_stop_ridership (service_date);
+CREATE INDEX IF NOT EXISTS idx_curated_stop_profile_geometry ON transport.curated_stop_profile USING gist (geometry);
+CREATE INDEX IF NOT EXISTS idx_curated_stop_profile_quality_status ON transport.curated_stop_profile (quality_status);
+CREATE INDEX IF NOT EXISTS idx_curated_stop_profile_analysis_ready ON transport.curated_stop_profile (is_analysis_ready);
+CREATE INDEX IF NOT EXISTS idx_transit_context_dong_geometry ON transport.transit_context_by_dong USING gist (geometry);
+CREATE INDEX IF NOT EXISTS idx_transit_context_dong_code ON transport.transit_context_by_dong (dong_code);
+CREATE INDEX IF NOT EXISTS idx_transit_context_dong_name ON transport.transit_context_by_dong (dong_name);
+CREATE INDEX IF NOT EXISTS idx_transit_context_dataset_version ON transport.transit_context_by_dong (dataset_version);
+CREATE INDEX IF NOT EXISTS idx_transit_demographic_geometry ON transport.transit_demographic_context_by_dong USING gist (geometry);
+CREATE INDEX IF NOT EXISTS idx_transit_demographic_dong_code ON transport.transit_demographic_context_by_dong (dong_code);
+CREATE INDEX IF NOT EXISTS idx_transit_demographic_dong_name ON transport.transit_demographic_context_by_dong (dong_name);
+CREATE INDEX IF NOT EXISTS idx_transit_demographic_population_date ON transport.transit_demographic_context_by_dong (population_reference_date);
+CREATE INDEX IF NOT EXISTS idx_transit_demographic_population_year ON transport.transit_demographic_context_by_dong (population_reference_year);
+CREATE INDEX IF NOT EXISTS idx_transit_demographic_dataset_version ON transport.transit_demographic_context_by_dong (dataset_version);

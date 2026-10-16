@@ -1,0 +1,26 @@
+title: 창원시 정류소 시간대별 이용량
+summary: 정류소·날짜·시간 단위의 nullable 이용량 관측 데이터
+description: Wide 원천자료를 24시간 Long 형식으로 변환하고 공식 정류소와 매칭한 데이터셋이다.
+source: ridership.csv
+source_url: null
+spatial_coverage: 경상남도 창원시
+temporal_coverage: 2025-08-18/2025-08-25
+geometry_type: None
+crs: null
+update_frequency: 원천자료 갱신 시
+generated_at: pipeline-generated
+processing_method: 이름 정규화와 10m 이내 meter 거리 매칭 후 pandas melt
+limitations:
+  - 현재 ridership 데이터는 2025-08-18 ~ 2025-08-25의 단기 관측기간을 기반으로 한다.
+  - 단기 데이터이므로 장기적 또는 계절적 교통수요를 대표한다고 해석해서는 안 된다.
+  - 원본 데이터의 NULL은 이용량 0으로 대체하지 않았다.
+  - 공식 정류소 Master 기준일은 2024-12-31이며 ridership 기준일과 시점 차이가 존재한다.
+  - 정류소 Match 과정에서 ambiguous/unmatched record가 존재할 수 있다.
+fields:
+  - {name: record_id, type: int64, description: 손실 없는 적재를 위한 레코드 식별자, nullable: false}
+  - {name: stop_id, type: string, description: 매칭된 공식 정류소ID, nullable: true}
+  - {name: service_date, type: date, description: 서비스 일자, nullable: true}
+  - {name: hour, type: int32, description: 0~23 시간, nullable: false}
+  - {name: ridership, type: nullable integer, description: 이용량; NULL은 관측 없음, nullable: true}
+  - {name: is_duplicate_observation, type: boolean, description: 동일 stop/date/hour 복수 원본 관측 여부, nullable: false}
+  - {name: duplicate_group_size, type: integer, description: 동일 stop/date/hour 원본 관측 행 수, nullable: false}
